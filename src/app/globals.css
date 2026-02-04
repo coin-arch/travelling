@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #0f172a;
+  --secondary: #334155;
+  --accent: #f59e0b;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --muted: #f8fafc;
+  --border: #e2e8f0;
+}
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary {
+  @apply bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-slate-800 transition-all;
+}
+
+.btn-accent {
+  @apply bg-accent text-primary px-6 py-2 rounded-full font-bold hover:scale-105 transition-all shadow-lg;
+}
