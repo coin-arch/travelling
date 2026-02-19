@@ -1,0 +1,28 @@
+there are 8 data types 
+
+primitive 
+number,bigint, string,boolean,null,undefined,symbol
+
+Number - > integer , float , INFINITY - INFINITY  and NaN (not a number)
+
+when we add any number with NaN -> NaN
+
+console.log(NaN ** 0)
+
+BigInt = 2*53 -1 = 
+and non premitive
+object
+
+// String 
+
+let name="shailesh"
+let name='shailesh'
+let backtick=` shailesh ` string interplation
+
+
+null / undefined
+
+null means khali
+
+undefined // (value not assgined)
+let ekVariableHai;

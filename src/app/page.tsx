@@ -1,11 +1,19 @@
 import Link from "next/link";
 import Hero from "@/components/Hero";
-import { Compass, Star, MapPin, ArrowRight } from "lucide-react";
+import { Star, MapPin, ArrowRight } from "lucide-react";
+import { dataService } from "@/lib/services/dataService";
+import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const [properties, categories, locations] = await Promise.all([
+    dataService.getProperties(),
+    dataService.getCategories(),
+    dataService.getLocations(),
+  ]);
+
   return (
     <div className="flex flex-col">
-      <Hero />
+      <Hero locations={locations || []} />
 
       {/* Featured Categories */}
       <section className="py-24 bg-white">
@@ -15,25 +23,45 @@ export default function Home() {
             <p className="text-slate-500 font-medium">Discover curated adventures and stays tailored to your interests.</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {[
-              { name: 'Luxury Villas', icon: '🏠', count: 22 },
-              { name: 'Water Sports', icon: '🏄', count: 11 },
-              { name: 'Paragliding', icon: '🪂', count: 4 },
-              { name: 'Trekking', icon: '🥾', count: 15 },
-              { name: 'Camping', icon: '🏕️', count: 8 },
-            ].map((cat) => (
-              <div key={cat.name} className="group cursor-pointer bg-muted hover:bg-primary hover:text-white p-8 rounded-3xl transition-all duration-500 text-center border border-border hover:border-primary">
-                <span className="text-4xl mb-4 block group-hover:scale-110 transition-transform">{cat.icon}</span>
-                <h3 className="font-bold text-sm uppercase tracking-wider mb-1">{cat.name}</h3>
-                <p className="text-xs font-bold text-accent">{cat.count} Activities</p>
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {(categories || []).slice(0, 8).map((cat) => (
+              <Link 
+                href={`/search?category=${cat.slug}`} 
+                key={cat.id} 
+                className="group relative h-[400px] overflow-hidden rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-700"
+              >
+                {/* Background Image */}
+                <Image 
+                  src={cat.image_url || 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2670'} 
+                  alt={cat.name} 
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                
+                {/* Content Overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-8 flex justify-between items-end">
+                  <div className="text-white">
+                    <h3 className="text-2xl font-black tracking-tighter mb-1 leading-none">{cat.name}</h3>
+                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest leading-none">
+                      Explore Activities
+                    </span>
+                  </div>
+                  
+                  <div className="h-10 w-10 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-white border border-white/20 group-hover:bg-accent group-hover:text-primary transition-all">
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Popular Adventures Placeholder */}
+      {/* Popular Adventures */}
       <section className="py-24 bg-muted">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
@@ -48,29 +76,30 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { id: 1, title: 'HashTag Villa | 2-BHK Villa | With Pvt Pool', price: 7000, slug: 'hashtag-villa-2bhk' },
-              { id: 2, title: 'White Water Rafting & Cliff Jumping', price: 1500, slug: 'rafting-rishikesh' },
-              { id: 3, title: 'Luxury Sailing Experience in Goa', price: 4500, slug: 'sailing-goa' },
-            ].map((card) => (
-              <Link href={`/activities/${card.id}`} key={card.id} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
+            {(properties || []).slice(0, 3).map((card: any) => (
+              <Link href={`/activities/${card.slug}`} key={card.id} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group">
                 <div className="relative h-64 overflow-hidden">
                   <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest text-primary flex items-center">
                     <Star className="h-3 w-3 text-accent mr-1 fill-accent" />
-                    <span>4.{card.id+5} Rating</span>
+                    <span>4.9 Rating</span>
                   </div>
-                  <img 
-                    src={`https://images.unsplash.com/photo-${1500000000000 + card.id*1000000}?w=800&auto=format&fit=crop`} 
-                    alt="Adventure" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  <Image 
+                    src={card.property_images?.[0]?.image_url || `https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2670&auto=format&fit=crop`} 
+                    alt={card.title} 
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    priority={false}
                   />
                 </div>
-                <div className="p-8">
+                <div className="p-8 relative bg-white">
                   <div className="flex items-center space-x-1 text-accent mb-3">
                     <MapPin className="h-3 w-3" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">Lonavala • Rishikesh • Goa</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest">
+                      {card.locations?.city} • {card.categories?.name}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-black mb-4 tracking-tighter group-hover:text-primary transition-colors h-14 overflow-hidden">
+                  <h3 className="text-xl font-black mb-4 tracking-tighter group-hover:text-primary transition-colors h-14 overflow-hidden text-ellipsis">
                     {card.title}
                   </h3>
                   <div className="flex justify-between items-center border-t border-slate-50 pt-6">

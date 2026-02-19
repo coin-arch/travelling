@@ -2,12 +2,26 @@
 
 import { motion } from 'framer-motion'
 import { Search, MapPin, Compass } from 'lucide-react'
+import { Location } from '@/lib/types'
+import Image from 'next/image'
 
-export default function Hero() {
+interface HeroProps {
+  locations: Location[]
+}
+
+export default function Hero({ locations }: HeroProps) {
   return (
     <section className="relative h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Background with Gradient Overlay */}
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center">
+      <div className="absolute inset-0">
+        <Image 
+          src="https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2670&auto=format&fit=crop"
+          alt="Adventure Background"
+          fill
+          priority
+          className="object-cover"
+          quality={90}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-background" />
       </div>
 
@@ -17,6 +31,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
+          {/* ... existing content ... */}
           <div className="inline-flex items-center space-x-2 bg-accent/20 border border-accent/30 text-accent px-4 py-1.5 rounded-full mb-6">
             <Compass className="h-4 w-4 animate-spin-slow" />
             <span className="text-xs font-bold uppercase tracking-widest leading-none">Discover Offbeat India</span>
@@ -46,10 +61,11 @@ export default function Hero() {
               <MapPin className="h-5 w-5 text-accent mr-3" />
               <select className="w-full bg-transparent focus:outline-none text-slate-800 font-bold appearance-none">
                 <option>All Locations</option>
-                <option>Rishikesh (Adventure Hub)</option>
-                <option>Goa (Water Sports)</option>
-                <option>Mumbai (Villas & Sailing)</option>
-                <option>Pune (Weekend Stays)</option>
+                {locations.map((loc) => (
+                  <option key={loc.id} value={loc.id}>
+                    {loc.city} ({loc.state})
+                  </option>
+                ))}
               </select>
             </div>
 
