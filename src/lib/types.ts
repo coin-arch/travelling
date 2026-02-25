@@ -159,7 +159,7 @@ export interface Database {
       };
       bookings: {
         Row: Booking;
-        Insert: Omit<Booking, 'id' | 'created_at'> & { id?: string; created_at?: string };
+        Insert: Omit<Booking, 'id' | 'created_at'> & { id?: string; created_at?: string; status?: BookingStatus };
         Update: Partial<Booking>;
       };
       payments: {

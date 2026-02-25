@@ -34,7 +34,7 @@ export default function Signup() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted p-4">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           className="bg-white p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center border border-border"
@@ -58,9 +58,9 @@ export default function Signup() {
     <div className="min-h-screen grid lg:grid-cols-2 bg-white">
       {/* Left Decoration - Visible on Desktop */}
       <div className="hidden lg:flex bg-primary relative overflow-hidden flex-col justify-between p-16 text-white">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center opacity-40 grayscale" />
+        <div className="absolute inset-0 bg-[url('/images/hero_bg_1.jpg')] bg-cover bg-center opacity-40 grayscale" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/80 to-accent/20" />
-        
+
         <Link href="/" className="relative z-10 flex items-center space-x-2">
           <span className="text-3xl font-black tracking-tighter italic">KHOJII.</span>
         </Link>
@@ -73,23 +73,23 @@ export default function Signup() {
         </div>
 
         <div className="relative z-10 mb-8">
-            <div className="flex -space-x-3 mb-4">
-                {[1,2,3,4].map(i => (
-                    <div key={i} className="h-10 w-10 rounded-full border-2 border-primary bg-slate-400 overflow-hidden">
-                        <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="user" />
-                    </div>
-                ))}
-                <div className="h-10 w-10 rounded-full border-2 border-primary bg-accent flex items-center justify-center text-[10px] font-black text-primary">
-                    10K+
-                </div>
+          <div className="flex -space-x-3 mb-4">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="h-10 w-10 rounded-full border-2 border-primary bg-slate-400 overflow-hidden">
+                <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="user" />
+              </div>
+            ))}
+            <div className="h-10 w-10 rounded-full border-2 border-primary bg-accent flex items-center justify-center text-[10px] font-black text-primary">
+              10K+
             </div>
-            <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Trusted by over 10,000 travelers</p>
+          </div>
+          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Trusted by over 10,000 travelers</p>
         </div>
       </div>
 
       {/* Right Form */}
       <div className="flex items-center justify-center p-8 lg:p-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full"

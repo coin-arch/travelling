@@ -17,20 +17,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const city = (property as any).locations?.city;
+  const prop = property as any;
+  const city = prop.locations?.city;
 
   return {
-    title: `${property.title} in ${city || "India"} - Khojii`,
-    description: property.description?.slice(0, 160) || `Book a stay at ${property.title}. Experience luxury and adventure with Khojii.`,
+    title: `${prop.title} in ${city || "India"} - Khojii`,
+    description: prop.description?.slice(0, 160) || `Book a stay at ${prop.title}. Experience luxury and adventure with Khojii.`,
     openGraph: {
-      images: [(property as any).property_images?.[0]?.image_url || ""],
+      images: [prop.property_images?.[0]?.image_url || ""],
     },
   };
 }
 
 export default async function ActivityDetail({ params }: PageProps) {
   const { slug } = await params;
-  
+
   try {
     const property = await dataService.getPropertyBySlug(slug);
 

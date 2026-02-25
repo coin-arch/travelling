@@ -2,19 +2,29 @@
 
 :root {
   --primary: #0f172a;
+  /* Deep Slate (for text/headings) */
   --secondary: #334155;
+  /* Slate 700 */
   --accent: #f59e0b;
+  /* Professional Amber/Orange */
+  --accent-glow: #fbbf24;
+  /* Lighter Amber */
   --background: #ffffff;
   --foreground: #0f172a;
   --muted: #f8fafc;
+  /* Very soft gray background */
   --border: #e2e8f0;
+  --white-gradient: linear-gradient(to right, #ffffff, #e2e8f0);
 }
 
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
+  --color-muted: var(--muted);
 }
 
 body {
@@ -24,16 +34,69 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Glassmorphism Classes for Light Theme */
 .glass {
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
+.glass-heavy {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+  /* Soft premium shadow */
+}
+
+/* Buttons */
 .btn-primary {
-  @apply bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-slate-800 transition-all;
+  @apply bg-primary text-white px-8 py-3 rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/40;
 }
 
 .btn-accent {
-  @apply bg-accent text-primary px-6 py-2 rounded-full font-bold hover:scale-105 transition-all shadow-lg;
+  @apply bg-accent text-white px-8 py-3 rounded-xl font-bold hover:bg-amber-600 shadow-lg shadow-amber-600/40 transition-all duration-300;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-primary px-8 py-3 rounded-xl font-bold hover:bg-slate-50 transition-all;
+}
+
+/* Typography Utilities */
+.heading-display {
+  @apply text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-[1.2] text-slate-900;
+}
+
+.heading-gradient {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-slate-950 via-slate-800 to-slate-900;
+}
+
+.heading-gradient-light {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-white via-slate-200 to-slate-300;
+}
+
+.heading-gradient-accent {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-accent to-accent-glow;
+}
+
+/* Animations */
+@keyframes slow-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-bg-pan {
+  background-size: 200% 200%;
+  animation: slow-pan 15s ease infinite;
 }

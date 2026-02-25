@@ -36,7 +36,7 @@ export default function Login() {
     <div className="min-h-screen grid lg:grid-cols-2 bg-white">
       {/* Form Section */}
       <div className="flex items-center justify-center p-8 lg:p-16">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full"
@@ -108,12 +108,12 @@ export default function Login() {
 
           <div className="mt-12 pt-12 border-t border-slate-100">
             <div className="grid grid-cols-2 gap-4">
-                <button className="flex items-center justify-center space-x-2 py-3 px-6 bg-muted rounded-2xl hover:bg-slate-200 transition-all font-black text-[10px] uppercase tracking-widest">
-                    <span>Google</span>
-                </button>
-                <button className="flex items-center justify-center space-x-2 py-3 px-6 bg-muted rounded-2xl hover:bg-slate-200 transition-all font-black text-[10px] uppercase tracking-widest">
-                    <span>Apple</span>
-                </button>
+              <button className="flex items-center justify-center space-x-2 py-3 px-6 bg-muted rounded-2xl hover:bg-slate-200 transition-all font-black text-[10px] uppercase tracking-widest">
+                <span>Google</span>
+              </button>
+              <button className="flex items-center justify-center space-x-2 py-3 px-6 bg-muted rounded-2xl hover:bg-slate-200 transition-all font-black text-[10px] uppercase tracking-widest">
+                <span>Apple</span>
+              </button>
             </div>
           </div>
         </motion.div>
@@ -121,10 +121,10 @@ export default function Login() {
 
       {/* Right Decoration */}
       <div className="hidden lg:flex bg-muted relative overflow-hidden flex-col justify-center p-16">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2670&auto=format&fit=crop')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-[url('/images/placeholder_hotel.jpg')] bg-cover bg-center" />
         <div className="absolute inset-0 bg-primary/40 backdrop-blur-sm" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
-        
+
         <div className="relative z-10 text-white">
           <div className="h-16 w-16 bg-accent rounded-3xl flex items-center justify-center mb-8 rotate-3 shadow-2xl">
             <Key className="h-8 w-8 text-primary" />

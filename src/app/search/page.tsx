@@ -10,30 +10,30 @@ export default async function SearchPage({
 }) {
   const { category, city, minPrice, maxPrice, amenities } = await searchParams;
   const selectedAmenities = amenities ? amenities.split(",") : [];
-  
+
   const [categories, locations, allAmenities, properties] = await Promise.all([
     dataService.getCategories(),
     dataService.getLocations(),
     dataService.getAmenities(),
     dataService.getPropertiesSearch(
-      category, 
-      city, 
-      minPrice ? parseInt(minPrice) : undefined, 
+      category,
+      city,
+      minPrice ? parseInt(minPrice) : undefined,
       maxPrice ? parseInt(maxPrice) : undefined,
       selectedAmenities
     )
   ]);
 
   // Group locations by city name to avoid duplicates in the UI
-  const uniqueLocations = locations?.reduce((acc: any[], current) => {
+  const uniqueLocations = locations?.reduce((acc: any[], current: any) => {
     if (!acc.find(item => item.city === current.city)) {
       acc.push(current);
     }
     return acc;
   }, []) || [];
 
-  const currentCategory = categories?.find(c => c.slug === category);
-  const filteredProperties = properties || [];
+  const currentCategory = (categories as any[])?.find(c => (c as any).slug === category);
+  const filteredProperties = (properties as any[]) || [];
 
   return (
     <div className="min-h-screen bg-slate-50 pt-28 pb-20">
@@ -61,8 +61,8 @@ export default async function SearchPage({
               </div>
               <div className="space-y-4">
                 {uniqueLocations.map((loc) => (
-                  <Link 
-                    key={loc.id} 
+                  <Link
+                    key={loc.id}
                     href={`/search?${category ? `category=${category}&` : ''}${city === loc.city ? '' : `city=${loc.city}`}`}
                     className="flex items-center justify-between group cursor-pointer"
                   >
@@ -96,10 +96,10 @@ export default async function SearchPage({
                 ].map((range) => {
                   const isActive = minPrice === range.min.toString() && maxPrice === range.max.toString();
                   const href = `/search?${category ? `category=${category}&` : ''}${city ? `city=${city}&` : ''}${isActive ? '' : `minPrice=${range.min}&maxPrice=${range.max}`}${amenities ? `&amenities=${amenities}` : ''}`;
-                  
+
                   return (
-                    <Link 
-                      key={range.label} 
+                    <Link
+                      key={range.label}
                       href={href}
                       className="flex items-center space-x-3 group cursor-pointer"
                     >
@@ -125,15 +125,15 @@ export default async function SearchPage({
                 <div className="space-y-4">
                   {allAmenities.map((amenity: any) => {
                     const isSelected = selectedAmenities.includes(amenity.id);
-                    const newAmenities = isSelected 
+                    const newAmenities = isSelected
                       ? selectedAmenities.filter(id => id !== amenity.id)
                       : [...selectedAmenities, amenity.id];
-                    
+
                     const href = `/search?${category ? `category=${category}&` : ""}${city ? `city=${city}&` : ""}${minPrice ? `minPrice=${minPrice}&` : ""}${maxPrice ? `maxPrice=${maxPrice}&` : ""}${newAmenities.length > 0 ? `amenities=${newAmenities.join(",")}` : ""}`;
 
                     return (
-                      <Link 
-                        key={amenity.id} 
+                      <Link
+                        key={amenity.id}
                         href={href}
                         className="flex items-center space-x-3 group cursor-pointer"
                       >
@@ -200,9 +200,9 @@ export default async function SearchPage({
                 filteredProperties.map((card: any) => (
                   <Link href={`/activities/${card.slug}`} key={card.id} className="bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 group border border-slate-100">
                     <div className="relative h-60 overflow-hidden">
-                      <Image 
-                        src={card.property_images?.[0]?.image_url || `https://images.unsplash.com/photo-1506461883276-594a12b11cf3?q=80&w=2670`} 
-                        alt={card.title} 
+                      <Image
+                        src={card.property_images?.[0]?.image_url || `/images/hero_bg_1.jpg`}
+                        alt={card.title}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                         sizes="(max-width: 768px) 100vw, 33vw"
@@ -220,7 +220,7 @@ export default async function SearchPage({
                           </div>
                         )}
                       </div>
-                      
+
                       <div className="flex items-center space-x-6 mb-6">
                         <div className="flex flex-col">
                           <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1 leading-none">Duration</span>

@@ -130,17 +130,17 @@ export const dataService = {
     // Client-side filtering for amenities (simplified for multi-select)
     let filteredData = data;
     if (amenityIds && amenityIds.length > 0) {
-      filteredData = data.filter(prop => {
+      filteredData = data.filter((prop: any) => {
         const propAmenityIds = prop.amenities?.map((a: any) => a.amenity_id) || [];
         return amenityIds.every(id => propAmenityIds.includes(id));
       });
     }
 
     // Add average rating to each property
-    return filteredData.map(prop => ({
+    return filteredData.map((prop: any) => ({
       ...prop,
-      averageRating: prop.reviews?.length > 0 
-        ? prop.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / prop.reviews.length 
+      averageRating: prop.reviews?.length > 0
+        ? prop.reviews.reduce((acc: number, r: any) => acc + r.rating, 0) / prop.reviews.length
         : 0,
       reviewCount: prop.reviews?.length || 0
     }));
@@ -151,7 +151,7 @@ export const dataService = {
       .from("amenities")
       .select("*")
       .order("name");
-    
+
     // Fallback in case table doesn't exist yet but we want the UI elements
     if (error) return [];
     return data;
@@ -186,7 +186,7 @@ export const dataService = {
           status: bookingData.status || "pending",
           created_at: new Date().toISOString()
         }
-      ])
+      ] as any)
       .select()
       .single();
 

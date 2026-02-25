@@ -1,7 +1,7 @@
 "use client"
 
-import { 
-  MapPin, Clock, Users, Zap, Calendar, 
+import {
+  MapPin, Clock, Users, Zap, Calendar,
   ChevronRight, ChevronLeft, Star, Share2, Heart,
   Wifi, Car, Utensils, Wind, ShieldAlert,
   Minus, Plus, Info, Check
@@ -17,7 +17,7 @@ interface ActivityDetailClientProps {
     categories: { name: string; slug: string } | null;
     locations: { city: string; state: string } | null;
     property_images: any[];
-    property_amenities: any[];
+    amenities: any[];
     reviews: any[];
   }
 }
@@ -39,9 +39,9 @@ export default function ActivityDetailClient({ property }: ActivityDetailClientP
     setActiveImage((prev) => (prev - 1 + images.length) % images.length)
   }
 
-  const images = property.property_images?.length > 0 
+  const images = property.property_images?.length > 0
     ? property.property_images.map(img => img.image_url)
-    : ["https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=2670"];
+    : ["/images/placeholder_hotel.jpg"];
 
   const stats = [
     { icon: <Clock className="h-5 w-5" />, label: "Duration", value: property.duration || "24 HRS" },
@@ -107,36 +107,36 @@ export default function ActivityDetailClient({ property }: ActivityDetailClientP
                     transition={{ duration: 0.5 }}
                     className="absolute inset-0"
                   >
-                    <Image 
-                      src={images[activeImage]} 
-                      alt={`Gallery ${activeImage}`} 
+                    <Image
+                      src={images[activeImage]}
+                      alt={`Gallery ${activeImage}`}
                       fill
                       priority
-                      className="object-cover" 
+                      className="object-cover"
                     />
                   </motion.div>
                 </AnimatePresence>
-                
+
                 {/* Navigation Buttons */}
                 <div className="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button 
+                  <button
                     onClick={handlePrev}
                     className="h-12 w-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 hover:bg-accent hover:text-primary transition-all"
                   >
                     <ChevronLeft className="h-6 w-6" />
                   </button>
-                  <button 
+                  <button
                     onClick={handleNext}
                     className="h-12 w-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/20 hover:bg-accent hover:text-primary transition-all"
                   >
                     <ChevronRight className="h-6 w-6" />
                   </button>
                 </div>
-                
+
                 {/* Thumbnails Overlay */}
                 <div className="absolute bottom-6 left-6 right-6 flex space-x-3 overflow-x-auto pb-2 scrollbar-hide">
                   {images.map((img, idx) => (
-                    <button 
+                    <button
                       key={idx}
                       onClick={() => setActiveImage(idx)}
                       className={`relative h-20 w-28 flex-shrink-0 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${activeImage === idx ? 'border-accent shadow-lg scale-105' : 'border-transparent opacity-60 hover:opacity-100'}`}
@@ -150,18 +150,18 @@ export default function ActivityDetailClient({ property }: ActivityDetailClientP
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-8 bg-muted rounded-[3rem] border border-slate-100 shadow-sm relative overflow-hidden">
-               <div className="absolute top-0 right-0 p-3 opacity-10">
-                  <Info className="h-20 w-20" />
-               </div>
-               {stats.map((stat, i) => (
-                  <div key={i} className={`flex flex-col items-center justify-center text-center p-4 ${i > 0 ? 'md:border-l border-slate-200' : ''}`}>
-                    <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center text-accent mb-3 shadow-sm">
-                      {stat.icon}
-                    </div>
-                    <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">{stat.label}</span>
-                    <span className="text-sm font-black text-primary uppercase">{stat.value}</span>
+              <div className="absolute top-0 right-0 p-3 opacity-10">
+                <Info className="h-20 w-20" />
+              </div>
+              {stats.map((stat, i) => (
+                <div key={i} className={`flex flex-col items-center justify-center text-center p-4 ${i > 0 ? 'md:border-l border-slate-200' : ''}`}>
+                  <div className="h-10 w-10 bg-white rounded-full flex items-center justify-center text-accent mb-3 shadow-sm">
+                    {stat.icon}
                   </div>
-               ))}
+                  <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">{stat.label}</span>
+                  <span className="text-sm font-black text-primary uppercase">{stat.value}</span>
+                </div>
+              ))}
             </div>
 
             {/* Overview / Description Sections */}
@@ -241,45 +241,45 @@ export default function ActivityDetailClient({ property }: ActivityDetailClientP
               {/* Guest Reviews Section */}
               <section>
                 <div className="flex items-center justify-between mb-10">
-                   <div className="flex items-center space-x-3">
-                      <div className="h-8 w-1 bg-accent rounded-full" />
-                      <h2 className="text-2xl font-black tracking-tighter uppercase italic">Guest Reviews</h2>
-                   </div>
-                   {(property.reviews || []).length > 0 && (
-                      <div className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-full text-sm font-black italic tracking-tighter">
-                         <Star className="h-4 w-4 text-accent fill-accent" />
-                         <span>{((property.reviews || []).reduce((acc: number, r: any) => acc + r.rating, 0) / (property.reviews || []).length).toFixed(1)}</span>
-                         <span className="text-white/50 px-1">/</span>
-                         <span>{(property.reviews || []).length} reviews</span>
-                      </div>
-                   )}
+                  <div className="flex items-center space-x-3">
+                    <div className="h-8 w-1 bg-accent rounded-full" />
+                    <h2 className="text-2xl font-black tracking-tighter uppercase italic">Guest Reviews</h2>
+                  </div>
+                  {(property.reviews || []).length > 0 && (
+                    <div className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-full text-sm font-black italic tracking-tighter">
+                      <Star className="h-4 w-4 text-accent fill-accent" />
+                      <span>{((property.reviews || []).reduce((acc: number, r: any) => acc + r.rating, 0) / (property.reviews || []).length).toFixed(1)}</span>
+                      <span className="text-white/50 px-1">/</span>
+                      <span>{(property.reviews || []).length} reviews</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                   {(property.reviews || []).length > 0 ? (
-                      (property.reviews || []).map((review: any, i: number) => (
-                         <div key={i} className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 space-y-4">
-                            <div className="flex justify-between items-start">
-                               <div>
-                                  <h4 className="font-black text-primary text-sm tracking-tight">{review.user_name || "Khojii Traveler"}</h4>
-                                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{new Date(review.created_at).toLocaleDateString()}</p>
-                               </div>
-                               <div className="flex space-x-0.5">
-                                  {[1, 2, 3, 4, 5].map((s) => (
-                                     <Star key={s} className={`h-3 w-3 ${s <= review.rating ? "text-accent fill-accent" : "text-slate-200"}`} />
-                                  ))}
-                               </div>
-                            </div>
-                            <p className="text-sm text-slate-600 font-medium leading-relaxed italic">
-                               "{review.comment}"
-                            </p>
-                         </div>
-                      ))
-                   ) : (
-                      <div className="col-span-full py-12 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
-                         <p className="text-slate-400 font-bold tracking-tight">No reviews yet. Be the first to stay!</p>
+                  {(property.reviews || []).length > 0 ? (
+                    (property.reviews || []).map((review: any, i: number) => (
+                      <div key={i} className="bg-slate-50 p-8 rounded-[2.5rem] border border-slate-100 space-y-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="font-black text-primary text-sm tracking-tight">{review.user_name || "Khojii Traveler"}</h4>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{new Date(review.created_at).toLocaleDateString()}</p>
+                          </div>
+                          <div className="flex space-x-0.5">
+                            {[1, 2, 3, 4, 5].map((s) => (
+                              <Star key={s} className={`h-3 w-3 ${s <= review.rating ? "text-accent fill-accent" : "text-slate-200"}`} />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-sm text-slate-600 font-medium leading-relaxed italic">
+                          "{review.comment}"
+                        </p>
                       </div>
-                   )}
+                    ))
+                  ) : (
+                    <div className="col-span-full py-12 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
+                      <p className="text-slate-400 font-bold tracking-tight">No reviews yet. Be the first to stay!</p>
+                    </div>
+                  )}
                 </div>
               </section>
 
@@ -295,8 +295,8 @@ export default function ActivityDetailClient({ property }: ActivityDetailClientP
                     { label: "Smoking/Alcohol", text: "Smoking within premises allowed. No restrictions on alcohol consumption." }
                   ].map((rule, i) => (
                     <div key={i}>
-                       <h4 className="text-accent font-black text-[10px] uppercase tracking-[0.2em] mb-3">{rule.label}</h4>
-                       <p className="text-sm text-slate-300 font-medium leading-relaxed">{rule.text}</p>
+                      <h4 className="text-accent font-black text-[10px] uppercase tracking-[0.2em] mb-3">{rule.label}</h4>
+                      <p className="text-sm text-slate-300 font-medium leading-relaxed">{rule.text}</p>
                     </div>
                   ))}
                 </div>
@@ -306,130 +306,129 @@ export default function ActivityDetailClient({ property }: ActivityDetailClientP
 
           {/* Right: Booking Sidebar */}
           <div className="lg:col-span-4 relative">
-             <div className="sticky top-32 space-y-6">
-                <div className="bg-white p-10 rounded-[3.5rem] border border-slate-100 shadow-2xl shadow-primary/5">
-                   {/* Date & Slot Pickers */}
-                   <div className="space-y-4 mb-8">
-                      <div className="p-4 bg-muted rounded-2xl border border-slate-100 group hover:border-accent transition-colors">
-                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">Preferred Date</label>
-                         <div className="flex justify-between items-center relative">
-                            <input 
-                              type="date" 
-                              value={selectedDate}
-                              onChange={(e) => setSelectedDate(e.target.value)}
-                              min={new Date().toISOString().split('T')[0]}
-                              className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full"
-                            />
-                            <span className={`text-sm font-black ${selectedDate ? 'text-primary' : 'text-slate-400'}`}>
-                              {selectedDate ? new Date(selectedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Select Date'}
-                            </span>
-                            <Calendar className={`h-4 w-4 ${selectedDate ? 'text-accent' : 'text-slate-400'}`} />
-                         </div>
-                      </div>
-                      
-                      <div className="space-y-3">
-                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1 px-4">Available Slots</span>
-                         <div className="grid grid-cols-1 gap-2">
-                           {["Full Day (24 hrs)", "Day Use (9 AM - 6 PM)", "Night Stay"].map((slot) => (
-                             <button
-                               key={slot}
-                               onClick={() => setSelectedSlot(slot)}
-                               className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all ${selectedSlot === slot ? 'border-accent bg-accent/5' : 'border-slate-50 bg-muted hover:border-slate-200'}`}
-                             >
-                               <span className={`text-xs font-black tracking-tight ${selectedSlot === slot ? 'text-primary' : 'text-slate-500'}`}>{slot}</span>
-                               <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${selectedSlot === slot ? 'border-primary bg-primary' : 'border-slate-300'}`}>
-                                 {selectedSlot === slot && <div className="h-1.5 w-1.5 bg-white rounded-full" />}
-                               </div>
-                             </button>
-                           ))}
-                         </div>
-                      </div>
-                   </div>
+            <div className="sticky top-32 space-y-6">
+              <div className="bg-white p-10 rounded-[3.5rem] border border-slate-100 shadow-2xl shadow-primary/5">
+                {/* Date & Slot Pickers */}
+                <div className="space-y-4 mb-8">
+                  <div className="p-4 bg-muted rounded-2xl border border-slate-100 group hover:border-accent transition-colors">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1">Preferred Date</label>
+                    <div className="flex justify-between items-center relative">
+                      <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        min={new Date().toISOString().split('T')[0]}
+                        className="absolute inset-0 opacity-0 cursor-pointer z-10 w-full h-full"
+                      />
+                      <span className={`text-sm font-black ${selectedDate ? 'text-primary' : 'text-slate-400'}`}>
+                        {selectedDate ? new Date(selectedDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Select Date'}
+                      </span>
+                      <Calendar className={`h-4 w-4 ${selectedDate ? 'text-accent' : 'text-slate-400'}`} />
+                    </div>
+                  </div>
 
-                   {/* Package Info */}
-                   <div className="mb-10">
-                      <h4 className="text-sm font-black mb-1">{property.title} Stay</h4>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 leading-relaxed">
-                        Includes: 2-BHK | Swimming Pool | Terrace | Wifi
-                      </p>
-                      
-                      <div className="flex items-end justify-between">
-                         <div className="text-primary">
-                            <span className="text-3xl font-black">₹{(Number(property.price) * Math.max(1, quantity)).toLocaleString()}</span>
-                            <span className="text-[10px] font-black text-slate-400 uppercase block tracking-widest mt-1">
-                              {quantity > 1 ? `${quantity}x Capacity` : 'Total Price'}
-                            </span>
-                         </div>
-                         
-                         {/* Quantity Counter */}
-                         <div className="flex items-center bg-muted rounded-xl p-2 border border-slate-100">
-                            <button 
-                              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                              className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400"
-                            >
-                              <Minus className="h-4 w-4" />
-                            </button>
-                            <span className="w-10 text-center text-sm font-black text-primary">{quantity}</span>
-                            <button 
-                              onClick={() => setQuantity(quantity + 1)}
-                              className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400"
-                            >
-                              <Plus className="h-4 w-4" />
-                            </button>
-                         </div>
-                      </div>
-                   </div>
-
-                    <button 
-                      onClick={async () => {
-                        if (selectedDate && !isBooking && !booked) {
-                          setIsBooking(true);
-                          try {
-                            await dataService.createBooking({
-                              property_id: property.id,
-                              booking_date: selectedDate,
-                              slot: selectedSlot,
-                              quantity: quantity,
-                              total_price: Number(property.price) * quantity
-                            });
-                            setBooked(true);
-                            setShowConfirmation(true);
-                          } catch (error) {
-                            console.error("Booking failed:", error);
-                          } finally {
-                            setIsBooking(false);
-                            setTimeout(() => setShowConfirmation(false), 3000);
-                          }
-                        }
-                      }}
-                      disabled={!selectedDate || isBooking || booked}
-                      className={`w-full py-5 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] transition-all transform active:scale-95 shadow-xl ${
-                        booked 
-                          ? 'bg-green-500 text-white shadow-green-100 cursor-default'
-                          : selectedDate && !isBooking
-                            ? 'bg-accent text-primary shadow-accent/20 hover:scale-[1.02]' 
-                            : 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
-                      }`}
-                    >
-                      {booked ? "Booking Confirmed!" : isBooking ? "Processing..." : "Book Now"}
-                    </button>
-
-                    {selectedDate && (
-                      <div className="mt-4 p-4 bg-green-50 rounded-2xl border border-green-100 flex items-center space-x-3">
-                         <div className="h-6 w-6 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
-                            <Check className="h-3 w-3 text-white" />
-                         </div>
-                         <p className="text-[10px] font-black text-green-700 uppercase tracking-widest">Available for {new Date(selectedDate).toLocaleDateString()}</p>
-                      </div>
-                    )}
+                  <div className="space-y-3">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 block mb-1 px-4">Available Slots</span>
+                    <div className="grid grid-cols-1 gap-2">
+                      {["Full Day (24 hrs)", "Day Use (9 AM - 6 PM)", "Night Stay"].map((slot) => (
+                        <button
+                          key={slot}
+                          onClick={() => setSelectedSlot(slot)}
+                          className={`flex items-center justify-between p-4 rounded-2xl border-2 transition-all ${selectedSlot === slot ? 'border-accent bg-accent/5' : 'border-slate-50 bg-muted hover:border-slate-200'}`}
+                        >
+                          <span className={`text-xs font-black tracking-tight ${selectedSlot === slot ? 'text-primary' : 'text-slate-500'}`}>{slot}</span>
+                          <div className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${selectedSlot === slot ? 'border-primary bg-primary' : 'border-slate-300'}`}>
+                            {selectedSlot === slot && <div className="h-1.5 w-1.5 bg-white rounded-full" />}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Support Info */}
-                 <div className="p-8 bg-muted rounded-[2.5rem] border border-slate-100 text-center">
-                    <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-2">Need help with booking?</p>
-                    <Link href="tel:+910000000000" className="text-sm font-black text-primary hover:text-accent transition-colors">+91 99999 00000</Link>
-                 </div>
-             </div>
+                {/* Package Info */}
+                <div className="mb-10">
+                  <h4 className="text-sm font-black mb-1">{property.title} Stay</h4>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6 leading-relaxed">
+                    Includes: 2-BHK | Swimming Pool | Terrace | Wifi
+                  </p>
+
+                  <div className="flex items-end justify-between">
+                    <div className="text-primary">
+                      <span className="text-3xl font-black">₹{(Number(property.price) * Math.max(1, quantity)).toLocaleString()}</span>
+                      <span className="text-[10px] font-black text-slate-400 uppercase block tracking-widest mt-1">
+                        {quantity > 1 ? `${quantity}x Capacity` : 'Total Price'}
+                      </span>
+                    </div>
+
+                    {/* Quantity Counter */}
+                    <div className="flex items-center bg-muted rounded-xl p-2 border border-slate-100">
+                      <button
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400"
+                      >
+                        <Minus className="h-4 w-4" />
+                      </button>
+                      <span className="w-10 text-center text-sm font-black text-primary">{quantity}</span>
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white transition-all text-slate-400"
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={async () => {
+                    if (selectedDate && !isBooking && !booked) {
+                      setIsBooking(true);
+                      try {
+                        await dataService.createBooking({
+                          property_id: property.id,
+                          booking_date: selectedDate,
+                          slot: selectedSlot,
+                          quantity: quantity,
+                          total_price: Number(property.price) * quantity
+                        });
+                        setBooked(true);
+                        setShowConfirmation(true);
+                      } catch (error) {
+                        console.error("Booking failed:", error);
+                      } finally {
+                        setIsBooking(false);
+                        setTimeout(() => setShowConfirmation(false), 3000);
+                      }
+                    }
+                  }}
+                  disabled={!selectedDate || isBooking || booked}
+                  className={`w-full py-5 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] transition-all transform active:scale-95 shadow-xl ${booked
+                    ? 'bg-green-500 text-white shadow-green-100 cursor-default'
+                    : selectedDate && !isBooking
+                      ? 'bg-accent text-primary shadow-accent/20 hover:scale-[1.02]'
+                      : 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
+                    }`}
+                >
+                  {booked ? "Booking Confirmed!" : isBooking ? "Processing..." : "Book Now"}
+                </button>
+
+                {selectedDate && (
+                  <div className="mt-4 p-4 bg-green-50 rounded-2xl border border-green-100 flex items-center space-x-3">
+                    <div className="h-6 w-6 bg-green-500 rounded-full flex items-center justify-center animate-pulse">
+                      <Check className="h-3 w-3 text-white" />
+                    </div>
+                    <p className="text-[10px] font-black text-green-700 uppercase tracking-widest">Available for {new Date(selectedDate).toLocaleDateString()}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Support Info */}
+              <div className="p-8 bg-muted rounded-[2.5rem] border border-slate-100 text-center">
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-2">Need help with booking?</p>
+                <Link href="tel:+910000000000" className="text-sm font-black text-primary hover:text-accent transition-colors">+91 99999 00000</Link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
