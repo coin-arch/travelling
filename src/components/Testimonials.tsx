@@ -79,7 +79,7 @@ export default function Testimonials() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="heading-display text-white"
+                            className="heading-display !text-white"
                         >
                             What our travelers say
                         </motion.h2>
