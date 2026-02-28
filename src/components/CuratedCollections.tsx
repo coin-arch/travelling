@@ -41,7 +41,7 @@ export default function CuratedCollections({ categories }: CuratedCollectionsPro
                             key={cat.id}
                             whileHover={{ y: -16, scale: 1.02 }}
                             transition={{ type: "spring", stiffness: 300, damping: 22 }}
-                            className="relative group h-[520px]"
+                            className="relative group h-[400px] md:h-[520px]"
                         >
                             {/* Full Card Container - Ultra Glass & Shine */}
                             <Link
