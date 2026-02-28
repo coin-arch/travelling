@@ -70,7 +70,7 @@ export default function Navbar() {
       }}
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl transition-colors duration-300"
     >
-      <div className="w-full px-6 lg:px-12">
+      <div className="w-full px-6 xl:px-12">
         <div className="flex justify-between items-center h-20">
 
           {/* Logo */}
@@ -85,7 +85,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden xl:flex items-center space-x-4 2xl:space-x-6">
             {[
               { name: 'Home', href: '/' },
               { name: 'Experiences', href: '/search' },
@@ -115,7 +115,7 @@ export default function Navbar() {
           </div>
 
           {/* User Auth */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden xl:flex items-center space-x-6">
             {!loading && (
               user ? (
                 <div className="flex items-center space-x-6">
@@ -169,7 +169,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center">
+          <div className="xl:hidden flex items-center">
             <button onClick={() => setIsOpen(!isOpen)} className="p-2 transition-colors">
               <motion.div style={{ color: iconColor }}>
                 <Menu className="h-6 w-6" />
@@ -181,7 +181,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-100 p-6 space-y-4 shadow-2xl animate-in slide-in-from-top-4 relative z-50 max-h-[80vh] overflow-y-auto">
+        <div className="xl:hidden bg-white border-t border-slate-100 p-6 space-y-4 shadow-2xl animate-in slide-in-from-top-4 relative z-50 max-h-[80vh] overflow-y-auto">
           {[
             { name: 'Home', href: '/' },
             { name: 'Experiences', href: '/search' },

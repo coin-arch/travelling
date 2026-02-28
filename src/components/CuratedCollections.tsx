@@ -15,9 +15,9 @@ export default function CuratedCollections({ categories }: CuratedCollectionsPro
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
                 {/* Section Header */}
-                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6 pb-6 border-b border-black/5">
-                    <div className="max-w-xl">
-                        <div className="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-md border border-slate-200 px-4 py-1.5 rounded-full mb-4 shadow-sm">
+                <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 pb-6 border-b border-black/5">
+                    <div className="max-w-xl text-center md:text-left w-full">
+                        <div className="inline-flex items-center justify-center space-x-2 bg-white/80 backdrop-blur-md border border-slate-200 px-4 py-1.5 rounded-full mb-4 shadow-sm mx-auto md:mx-0">
                             <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse"></span>
                             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-800">Immersive Experiences</span>
                         </div>
