@@ -66,9 +66,9 @@ export default function DreamDestinations() {
                     </div>
 
                     {/* Right side - 3D Cylinder (Simplified) */}
-                    <div className="w-full lg:w-[55%] h-[500px] flex items-center justify-center [perspective:1200px]">
+                    <div className="w-full lg:w-[55%] h-[350px] md:h-[500px] flex items-center justify-center [perspective:1200px]">
                         <motion.div
-                            className="relative w-64 h-80 [transform-style:preserve-3d]"
+                            className="relative w-64 h-80 [transform-style:preserve-3d] scale-[0.7] md:scale-100"
                             style={{ rotateY: rotation }}
                         >
                             {images.map((img, idx) => (
